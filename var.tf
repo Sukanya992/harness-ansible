@@ -1,6 +1,11 @@
-variable "project_id" {}
-variable "region" { default = "us-central1" }
-variable "zone"   { default = "us-central1-a" }
+variable "project_id" {
+  default = "plated-epigram-452709-h6"
+}
 
-variable "ssh_user"       { default = "debian" }
-variable "public_key_path" { default = "~/.ssh/id_rsa.pub" }
+variable "region" {
+  default = "us-central1"
+}
+
+variable "zone" {
+  default = "us-central1-a"
+}
