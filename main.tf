@@ -20,12 +20,12 @@ resource "google_compute_instance" "vm_instance" {
     access_config {}
   }
 
+  metadata = {
+    ssh-keys = "debian:${file("~/.ssh/id_rsa.pub")}"
+  }
+
   metadata_startup_script = <<-EOT
     sudo apt-get update
     sudo apt-get install -y python3
   EOT
-}
-
-output "vm_ip" {
-  value = google_compute_instance.vm_instance.network_interface[0].access_config[0].nat_ip
 }
