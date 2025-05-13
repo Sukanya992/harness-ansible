@@ -1,0 +1,55 @@
+- name: Install Docker and Run App
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Update APT repo
+      apt:
+        update_cache: yes
+
+    - name: Install dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - software-properties-common
+        - gnupg
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+
+    - name: Add Docker repo
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/debian bullseye stable
+        state: present
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: yes
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Pull Docker Image
+      docker_image:
+        name: nginx
+        source: pull
+
+    - name: Run Docker Container
+      docker_container:
+        name: my-nginx
+        image: nginx
+        ports:
+          - "80:80"
+        state: started
+        restart_policy: always
