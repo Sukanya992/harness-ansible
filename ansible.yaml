@@ -3,11 +3,11 @@
   become: true
 
   tasks:
-    - name: Update APT repo
+    - name: Update apt cache
       apt:
         update_cache: yes
 
-    - name: Install dependencies
+    - name: Install prerequisites
       apt:
         name: "{{ item }}"
         state: present
@@ -23,9 +23,9 @@
         url: https://download.docker.com/linux/debian/gpg
         state: present
 
-    - name: Add Docker repo
+    - name: Add Docker repository
       apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/debian bullseye stable
+        repo: "deb [arch=amd64] https://download.docker.com/linux/debian bullseye stable"
         state: present
 
     - name: Install Docker
@@ -34,18 +34,18 @@
         state: latest
         update_cache: yes
 
-    - name: Start Docker
+    - name: Enable and start Docker
       service:
         name: docker
-        state: started
         enabled: yes
+        state: started
 
-    - name: Pull Docker Image
+    - name: Pull nginx image
       docker_image:
         name: nginx
         source: pull
 
-    - name: Run Docker Container
+    - name: Run nginx container
       docker_container:
         name: my-nginx
         image: nginx
