@@ -68,7 +68,7 @@ ansible all -m ping
 
 
 
-git clone https://github.com/ganesh-redy/harness-ansible.git
+git clone https://github.com/Sukanya996/harness-ansible.git
 cd harness-ansible
 ls 
 ansible-playbook -i "$INVENTORY_FILE" --private-key "$PRIVATE_KEY_PATH" -u "$VM_USER" delegate.yaml
