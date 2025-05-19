@@ -12,7 +12,7 @@ resource "tls_private_key" "my_ssh_key" {
 }
 
 resource "google_compute_instance" "instance" {
-  name         = "ansible-1"
+  name         = "ansible"
   machine_type = "e2-standard-2"
   zone = "us-west1-a"
 
