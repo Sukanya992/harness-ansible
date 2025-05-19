@@ -1,17 +1,24 @@
 provider "google" {
-  project = var.project_id
-  region  = var.region
-  zone    = var.zone
+  project = "plated-epigram-452709-h6"        # ← your GCP project ID
+  region  = "us-west1"          # optional, for regional resources
+  zone    = "us-west1-a"        # for zonal resources like compute instances
 }
 
-resource "google_compute_instance" "vm_instance" {
-  name         = "ansible-vm"
-  machine_type = "e2-medium"
-  zone         = var.zone
+
+
+resource "tls_private_key" "my_ssh_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "google_compute_instance" "instance" {
+  name         = "ansible-1"
+  machine_type = "e2-standard-2"
+  zone = "us-west1-a"
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-11"
+      image = "centos-stream-9"
     }
   }
 
@@ -21,11 +28,15 @@ resource "google_compute_instance" "vm_instance" {
   }
 
   metadata = {
-    ssh-keys = "debian:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = "ansible:${tls_private_key.my_ssh_key.public_key_openssh}"
   }
+}
 
-  metadata_startup_script = <<-EOT
-    sudo apt-get update
-    sudo apt-get install -y python3
-  EOT
+output "private_key" {
+  value     = tls_private_key.my_ssh_key.private_key_pem
+  sensitive = true
+}
+output "vm_external_ip" {
+   
+  value = google_compute_instance.instance.network_interface[0].access_config[0].nat_ip
 }
