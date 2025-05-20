@@ -53,13 +53,13 @@
         
     - name: Pull Docker image from DockerHub
       docker_image:
-        name: sukanya996/bule-green:green-46
+        name: sukanya996/bule-green:blue-46
         source: pull
 
     - name: Run Docker container for your app
       docker_container:
-        name: my-app1
-        image: sukanya996/bule-green:green-46
+        name: my-app2
+        image: sukanya996/bule-green:blue-46
         state: started
         restart_policy: always
         ports:
