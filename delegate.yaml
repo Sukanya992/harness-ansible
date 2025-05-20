@@ -33,6 +33,28 @@
         state: started
         enabled: yes
 
+        - name: Remove existing container if present
+      docker_container:
+        name: my-app
+        state: absent
+        force_kill: true
+        ignore_errors: yes  # avoid failure if container doesn't exist
+
+    - name: Pull Docker image from DockerHub
+      docker_image:
+        name: sukanya996/bule-green:green-46
+        source: pull
+
+    - name: Run Docker container for your app
+      docker_container:
+        name: my-app
+        image: sukanya996/bule-green:green-46
+        state: started
+        restart_policy: always
+        ports:
+          - "5000:5000"  # Change this based on your app
+
+
     - name: Install Harness Delegate (Docker-based)
       shell: >
         docker run -d --cpus=1 --memory=2g --network=bridge
