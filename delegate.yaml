@@ -32,8 +32,19 @@
         name: docker
         state: started
         enabled: yes
+        
+    - name: Install Harness Delegate (Docker-based)
+      shell: >
+        docker run -d --cpus=1 --memory=2g --network=bridge
+        -e DELEGATE_NAME=docker-delegate-ansible-vm-iacm
+        -e NEXT_GEN=true
+        -e DELEGATE_TYPE=DOCKER
+        -e ACCOUNT_ID=ucHySz2jQKKWQweZdXyCog
+        -e DELEGATE_TOKEN=NTRhYTY0Mjg3NThkNjBiNjMzNzhjOGQyNjEwOTQyZjY=
+        -e DELEGATE_TAGS=""
+        -e MANAGER_HOST_AND_PORT=https://app.harness.io us-docker.pkg.dev/gar-prod-setup/harness-public/harness/delegate:25.05.85801
 
-        - name: Remove existing container if present
+    - name: Remove existing container if present
       docker_container:
         name: my-app
         state: absent
@@ -53,16 +64,3 @@
         restart_policy: always
         ports:
           - "5000:5000"  # Change this based on your app
-
-
-    - name: Install Harness Delegate (Docker-based)
-      shell: >
-        docker run -d --cpus=1 --memory=2g --network=bridge
-        -e DELEGATE_NAME=docker-delegate-ansible-vm-iacm
-        -e NEXT_GEN=true
-        -e DELEGATE_TYPE=DOCKER
-        -e ACCOUNT_ID=ucHySz2jQKKWQweZdXyCog
-        -e DELEGATE_TOKEN=NTRhYTY0Mjg3NThkNjBiNjMzNzhjOGQyNjEwOTQyZjY=
-        -e DELEGATE_TAGS=""
-        -e MANAGER_HOST_AND_PORT=https://app.harness.io us-docker.pkg.dev/gar-prod-setup/harness-public/harness/delegate:25.05.85801
-
