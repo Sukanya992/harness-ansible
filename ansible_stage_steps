@@ -1,6 +1,6 @@
 step:1
 echo "<+pipeline.stages.terraform.spec.workspace>" # here we get pipeline 
-echo "<+workspace.workspace-sukanya.vm_external_ip>" # here we get output of ip of vm_external_ip 
+echo "<+workspace.iacsukanya.vm_external_ip>" # here we get output of ip of vm_external_ip 
 
 step 2:
 install the ansible
@@ -24,8 +24,8 @@ ansible --version
 
 # Define required variables
 VM_USER="ansible"
-VM_IP="<+workspace.workspace-sukanya.vm_external_ip>"         # Harness will replace this
-PRIVATE_KEY_CONTENT="<+workspace.workspace-sukanya.private_key>"  # Injected multiline key
+VM_IP="<+workspace.iacsukanya.vm_external_ip>"         # Harness will replace this
+PRIVATE_KEY_CONTENT="<+workspace.iacsukanya.private_key>"  # Injected multiline key
 
 # Temporary working directory for Ansible setup
 WORKDIR="$PWD/private"
@@ -90,8 +90,8 @@ ansible --version
 
 # Define required variables
 VM_USER="ansible"
-VM_IP="<+workspace.workspace-sukanya.vm_external_ip>"         # Harness will replace this
-PRIVATE_KEY_CONTENT="<+workspace.workspace-sukanya.private_key>"  # Injected multiline key
+VM_IP="<+workspace.iacsukanya.vm_external_ip>"         # Harness will replace this
+PRIVATE_KEY_CONTENT="<+workspace.iacsukanya.private_key>"  # Injected multiline key
 
 # Temporary working directory for Ansible setup
 WORKDIR="$PWD/private"
