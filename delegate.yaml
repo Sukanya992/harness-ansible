@@ -44,13 +44,6 @@
         -e DELEGATE_TAGS=""
         -e MANAGER_HOST_AND_PORT=https://app.harness.io us-docker.pkg.dev/gar-prod-setup/harness-public/harness/delegate:25.05.85801
 
-    - name: Remove existing container if present
-      docker_container:
-        name: my-app
-        state: absent
-        force_kill: true
-        ignore_errors: yes  # avoid failure if container doesn't exist
-
     - name: Pull Docker image from DockerHub
       docker_image:
         name: sukanya996/bule-green:green-46
@@ -58,7 +51,7 @@
 
     - name: Run Docker container for your app
       docker_container:
-        name: my-app
+        name: my-app1
         image: sukanya996/bule-green:green-46
         state: started
         restart_policy: always
